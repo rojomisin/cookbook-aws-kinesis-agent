@@ -9,7 +9,7 @@ version '0.2.0'
 chef_version '>= 12.5' if respond_to?(:chef_version)
 
 supports 'ubuntu', '<= 16.04'
-supports 'centos', '= 7'
+supports 'centos', '>= 7.0'
 
 depends 'apt'
 depends 'line'
