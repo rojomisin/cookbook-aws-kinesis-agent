@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dgoradia/cookbook-aws-kinesis-agent.svg?branch=master)](https://travis-ci.org/dgoradia/cookbook-aws-kinesis-agent)
+
 # aws-kinesis-agent
 
 ## Warning
