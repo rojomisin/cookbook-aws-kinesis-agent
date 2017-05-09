@@ -14,7 +14,7 @@ class KinesisFlow < Chef::Resource
   # end
 
   action :add do
-    if !::File.exist?(new_resource.agent_file) || ::File.empty?(new_resource.agent_file)
+    if !::File.exist?(new_resource.agent_file) || ::File.zero?(new_resource.agent_file)
       raise 'Use the `aws_kinesis_config` resource to install a kinesis ' \
             'agent configuration file before adding/removing flows.'
     end
