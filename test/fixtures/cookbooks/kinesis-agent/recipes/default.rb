@@ -27,3 +27,12 @@ end
     notifies :restart, 'service[aws-kinesis-agent]'
   end
 end
+
+data_processing_options = { optionName: 'LOGTOJSON', logFormat: 'SYSLOG' }
+aws_kinesis_flow '/var/log/dpkg.log' do
+  stream_type :firehose
+  stream_name 'MyFirehoseStreamName'
+  data_processing_options data_processing_options
+  action :add
+  notifies :restart, 'service[aws-kinesis-agent]'
+end

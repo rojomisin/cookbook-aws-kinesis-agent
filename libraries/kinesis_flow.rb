@@ -7,6 +7,7 @@ class KinesisFlow < Chef::Resource
   property :file_pattern, String, name_property: true
   property :stream_type, [String, Symbol], equal_to: [:kinesis, :firehose], default: :kinesis
   property :stream_name, String
+  property :data_processing_options, Hash
   # property :data, Hash, desired_state: false
 
   # load_current_value do
@@ -27,6 +28,14 @@ class KinesisFlow < Chef::Resource
 
     flow = { filePattern: file_pattern }
     flow[parse_stream_type(stream_type)] = stream_name
+
+    Chef::Log.error(data_processing_options)
+    Chef::Log.error(Chef::Config[:file_cache_path])
+    if data_processing_options && data_processing_options.is_a?(Hash)
+      fatal!("Property 'data_processing_options' requires key 'optionName'.") unless data_processing_options.key?(:optionName)
+      flow['dataProcessingOptions'] = data_processing_options
+    end
+
     data['flows'].push flow
 
     converge_if_changed do
@@ -71,6 +80,10 @@ class KinesisFlow < Chef::Resource
 
     def parse_stream_type(stream_type)
       stream_type == :kinesis ? 'kinesisStream' : 'deliveryStream'
+    end
+
+    def fatal!(msg)
+      Chef::Application.fatal!(msg)
     end
   end
 end
